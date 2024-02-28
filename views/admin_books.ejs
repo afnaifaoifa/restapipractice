@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Books</title>
+    <style>
+        /* CSS для стилизации таблицы */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        form {
+            display: inline-block;
+        }
+        button {
+            padding: 5px 10px;
+            margin-right: 5px;
+            border: none;
+            border-radius: 3px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Admin Books</h1>
+
+    <!-- Форма для создания новой книги -->
+    <h2>Add New Book</h2>
+    <form action="/admin/books" method="POST">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required><br><br>
+        <label for="author">Author:</label>
+        <input type="text" id="author" name="author" required><br><br>
+        <label for="genre">Genre:</label>
+        <input type="text" id="genre" name="genre" required><br><br>
+        <label for="publicationYear">Publication Year:</label>
+        <input type="number" id="publicationYear" name="publicationYear" required><br><br>
+        <label for="quantityAvailable">Quantity Available:</label>
+        <input type="number" id="quantityAvailable" name="quantityAvailable" required><br><br>
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" required><br><br>
+        <button type="submit">Add Book</button>
+    </form>
+
+    <!-- Таблица для отображения списка книг -->
+    <h2>Book Inventory</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Genre</th>
+                <th>Publication Year</th>
+                <th>Quantity Available</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Итерация по списку книг и отображение каждой книги в виде строки таблицы -->
+            <% books.forEach(book => { %>
+                <tr>
+                    <td><%= book.title %></td>
+                    <td><%= book.author %></td>
+                    <td><%= book.genre %></td>
+                    <td><%= book.publicationYear %></td>
+                    <td><%= book.quantityAvailable %></td>
+                    <td>$<%= book.price %></td>
+                    <td>
+                        <!-- Формы для выполнения операций CRUD над книгами -->
+                        <form action="/admin/books/<%= book._id %>" method="GET">
+                            <button type="submit">View</button>
+                        </form>
+                        <form action="/admin/books/<%= book._id %>/edit" method="GET">
+                            <button type="submit">Edit</button>
+                        </form>
+                        <form action="/admin/books/<%= book._id %>" method="POST">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+</body>
+</html>

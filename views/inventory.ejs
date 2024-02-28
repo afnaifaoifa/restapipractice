@@ -1,0 +1,58 @@
+<!-- inventory.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookstore Inventory</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .books {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .book {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+        }
+
+        .book h2 {
+            margin-top: 0;
+        }
+
+        .book p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bookstore Inventory</h1>
+    <div class="books">
+        <% books.forEach(book => { %>
+            <div class="book">
+                <h2><%= book.title %></h2>
+                <p>Author: <%= book.author %></p>
+                <p>Genre: <%= book.genre %></p>
+                <p>Publication Year: <%= book.publicationYear %></p>
+                <p>Quantity Available: <%= book.quantityAvailable %></p>
+                <p>Price: <%= book.price %> USD</p>
+            </div>
+        <% }); %>
+    </div>
+</body>
+</html>
