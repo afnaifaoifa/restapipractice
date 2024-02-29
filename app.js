@@ -121,29 +121,28 @@ app.get('/books', async (req, res) => {
 });
 
 app.get('/books/:id', async (req, res) => {
-    try {
-      const bookId = req.params.id;
-      const book = await Book.findById(bookId);
-      if (!book) {
-        return res.status(404).render('error', { message: 'Book not found' }); // Render error template
-      }
-      res.render('buks', { books: books }); // Pass book data to the template
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Internal server error' });
+  try {
+    const bookId = req.params.id;
+    const book = await Book.findById(bookId);
+    if (!book) {
+      return res.status(404).json({ message: 'Book not found' });
     }
-  });
-  
+    res.render('book', { book: book });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
-  app.get('/admin/books', authenticateUser, async (req, res) => {
-    try {
-      const books = await Book.find();
-      res.render('buks', { books: books });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Internal server error' });
-    }
-  });
+app.get('/admin/books', authenticateUser, async (req, res) => {
+  try {
+    const books = await Book.find();
+    res.render('admin_books', { books: books });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
 app.get('/admin/books/:id', authenticateUser, async (req, res) => {
   try {
@@ -152,7 +151,7 @@ app.get('/admin/books/:id', authenticateUser, async (req, res) => {
     if (!book) {
       return res.status(404).json({ message: 'Book not found' });
     }
-    res.render('admin_books', { book: book });
+    res.render('admin_book', { book: book });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal server error' });
